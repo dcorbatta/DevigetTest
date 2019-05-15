@@ -20,6 +20,7 @@
 		BF7E1A4D228B7E3100F40708 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A4C228B7E3100F40708 /* Entry.swift */; };
 		BF7E1A50228B7E7500F40708 /* TopEntriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A4F228B7E7500F40708 /* TopEntriesResponse.swift */; };
 		BF7E1A52228B7E8C00F40708 /* EntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A51228B7E8C00F40708 /* EntryService.swift */; };
+		BF7E1A55228B85DB00F40708 /* EntriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A54228B85DA00F40708 /* EntriesPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		BF7E1A4C228B7E3100F40708 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		BF7E1A4F228B7E7500F40708 /* TopEntriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopEntriesResponse.swift; sourceTree = "<group>"; };
 		BF7E1A51228B7E8C00F40708 /* EntryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryService.swift; sourceTree = "<group>"; };
+		BF7E1A54228B85DA00F40708 /* EntriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 		BF7E1A21228B7AC700F40708 /* Deviget */ = {
 			isa = PBXGroup;
 			children = (
+				BF7E1A53228B85B900F40708 /* Presenters */,
 				BF7E1A4E228B7E5F00F40708 /* Services */,
 				BF7E1A4B228B7E2300F40708 /* Models */,
 				BF7E1A44228B7D4C00F40708 /* Networking */,
@@ -139,6 +142,14 @@
 				BF7E1A51228B7E8C00F40708 /* EntryService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		BF7E1A53228B85B900F40708 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				BF7E1A54228B85DA00F40708 /* EntriesPresenter.swift */,
+			);
+			path = Presenters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,6 +262,7 @@
 				BF7E1A48228B7DE600F40708 /* Resource.swift in Sources */,
 				BF7E1A23228B7AC700F40708 /* AppDelegate.swift in Sources */,
 				BF7E1A50228B7E7500F40708 /* TopEntriesResponse.swift in Sources */,
+				BF7E1A55228B85DB00F40708 /* EntriesPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
