@@ -21,6 +21,7 @@
 		BF7E1A50228B7E7500F40708 /* TopEntriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A4F228B7E7500F40708 /* TopEntriesResponse.swift */; };
 		BF7E1A52228B7E8C00F40708 /* EntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A51228B7E8C00F40708 /* EntryService.swift */; };
 		BF7E1A55228B85DB00F40708 /* EntriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A54228B85DA00F40708 /* EntriesPresenter.swift */; };
+		BF7E1A60228CE98F00F40708 /* EntryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A5F228CE98F00F40708 /* EntryRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		BF7E1A4F228B7E7500F40708 /* TopEntriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopEntriesResponse.swift; sourceTree = "<group>"; };
 		BF7E1A51228B7E8C00F40708 /* EntryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryService.swift; sourceTree = "<group>"; };
 		BF7E1A54228B85DA00F40708 /* EntriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesPresenter.swift; sourceTree = "<group>"; };
+		BF7E1A5F228CE98F00F40708 /* EntryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		BF7E1A21228B7AC700F40708 /* Deviget */ = {
 			isa = PBXGroup;
 			children = (
+				BF7E1A5E228CE97800F40708 /* Repositories */,
 				BF7E1A53228B85B900F40708 /* Presenters */,
 				BF7E1A4E228B7E5F00F40708 /* Services */,
 				BF7E1A4B228B7E2300F40708 /* Models */,
@@ -150,6 +153,14 @@
 				BF7E1A54228B85DA00F40708 /* EntriesPresenter.swift */,
 			);
 			path = Presenters;
+			sourceTree = "<group>";
+		};
+		BF7E1A5E228CE97800F40708 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				BF7E1A5F228CE98F00F40708 /* EntryRepository.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,6 +266,7 @@
 			files = (
 				BF7E1A4D228B7E3100F40708 /* Entry.swift in Sources */,
 				BF7E1A46228B7D7700F40708 /* HttpMethod.swift in Sources */,
+				BF7E1A60228CE98F00F40708 /* EntryRepository.swift in Sources */,
 				BF7E1A52228B7E8C00F40708 /* EntryService.swift in Sources */,
 				BF7E1A27228B7AC700F40708 /* DetailViewController.swift in Sources */,
 				BF7E1A4A228B7E0A00F40708 /* URLSession+Resource.swift in Sources */,

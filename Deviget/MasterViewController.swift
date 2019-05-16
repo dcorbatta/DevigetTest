@@ -16,11 +16,15 @@ class MasterViewController: UITableViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        entriesPresenter = EntriesPresenter(delegate: self)
+        let repository = EntryDataRepository(entryService: EntryService())
+        entriesPresenter = EntriesPresenter(delegate: self,entryRepository: repository)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.leftBarButtonItem = editButtonItem
+        
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
@@ -57,13 +61,13 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return entriesPresenter.entriesCount
+        return entriesPresenter.visibleEntriesCount
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        if let object = entriesPresenter.getEntry(atIndex:indexPath.row) {
+        if let object = entriesPresenter.getVisibleEntry(atIndex:indexPath.row) {
             cell.textLabel!.text = object.title
         }
         return cell
@@ -76,8 +80,10 @@ class MasterViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            //objects.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            if let entry = entriesPresenter.getVisibleEntry(atIndex:  indexPath.row) {
+                entriesPresenter.dismissEntry(entry: entry)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }

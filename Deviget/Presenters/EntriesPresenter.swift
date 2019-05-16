@@ -19,15 +19,15 @@ class EntriesPresenter {
     
     weak var delegate : EntriesPresenterDelegate?
     
-    init(delegate : EntriesPresenterDelegate) {
+    var entryRepository : EntryRepository
+    
+    init(delegate : EntriesPresenterDelegate, entryRepository: EntryRepository) {
         self.delegate = delegate
+        self.entryRepository = entryRepository
     }
     
     func getAll() {
-        let serv = EntryService()
-        serv.getTopEntries(after: nil, before: nil) { [weak self](entries,nextpage, errorMsg) in
-            self?.data = entries
-            self?.nextPageId = nextpage
+        entryRepository.load(){ [weak self](errorMsg) in
             
             DispatchQueue.main.async {
                 self?.delegate?.updateUI()
@@ -36,16 +36,31 @@ class EntriesPresenter {
             }
         }
     }
+    
+    func dismissEntry(entry: Entry) {
+        entryRepository.dismiss(entry: entry)
+    }
 }
 
 extension EntriesPresenter {
     var entriesCount : Int {
         get {
-            return data?.count ?? 0
+            return entryRepository.entriesCount
+        }
+    }
+    
+    var visibleEntriesCount : Int {
+        get {
+            return entryRepository.visibleEntriesCount
         }
     }
     
     func getEntry(atIndex index : Int) -> Entry?{
-        return data?[index]
+        return entryRepository.getEntry(atIndex:index)
     }
+    
+    func getVisibleEntry(atIndex index : Int) -> Entry?{
+        return entryRepository.getVisibleEntry(atIndex: index)
+    }
+    
 }
