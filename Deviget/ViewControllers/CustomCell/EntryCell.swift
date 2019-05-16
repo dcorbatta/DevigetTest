@@ -32,6 +32,8 @@ class EntryCell: UITableViewCell {
             if let isRead = self.entry.read, isRead {
                 readStatusView.isHidden = true
             }
+            self.postedTimeLB.text = entry.createdAt?.timeAgo() ?? ""
+            self.thumbnailImageView.setImage(fromURL: entry.thumbnail, contentMode: .scaleAspectFill)
         }
     }
     

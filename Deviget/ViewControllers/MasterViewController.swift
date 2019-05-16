@@ -124,15 +124,14 @@ extension MasterViewController : EntryCellDelegate {
 extension MasterViewController : EntriesPresenterDelegate {
     
     func reload(atIndexPath indexPaths: [IndexPath]){
-        let indexPathsToReload = visibleIndexPathsToReload(intersecting: indexPaths)
-        
-        if indexPathsToReload.count > 0 {
+        if indexPaths.count > 0 {
             //Insert the new rows
-            tableView.insertRows(at: indexPaths, with: .automatic)
+            self.tableView.performBatchUpdates({
+                self.tableView.setContentOffset(self.tableView.contentOffset, animated: false)
+                self.tableView.insertRows(at: indexPaths, with: .bottom)
+            }, completion: nil)
         }
         
-        //Reload visible rows
-        tableView.reloadRows(at: indexPathsToReload, with: .automatic)
     }
     
     func updateUI() {

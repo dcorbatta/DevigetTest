@@ -23,6 +23,8 @@
 		BF7E1A55228B85DB00F40708 /* EntriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A54228B85DA00F40708 /* EntriesPresenter.swift */; };
 		BF7E1A60228CE98F00F40708 /* EntryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A5F228CE98F00F40708 /* EntryRepository.swift */; };
 		BF7E1A65228CF38D00F40708 /* EntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A64228CF38D00F40708 /* EntryCell.swift */; };
+		BF7E1A68228CFE4E00F40708 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A67228CFE4E00F40708 /* Date+Extension.swift */; };
+		BF7E1A6A228CFED900F40708 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A69228CFED900F40708 /* UIImageView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		BF7E1A54228B85DA00F40708 /* EntriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesPresenter.swift; sourceTree = "<group>"; };
 		BF7E1A5F228CE98F00F40708 /* EntryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryRepository.swift; sourceTree = "<group>"; };
 		BF7E1A64228CF38D00F40708 /* EntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryCell.swift; sourceTree = "<group>"; };
+		BF7E1A67228CFE4E00F40708 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		BF7E1A69228CFED900F40708 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,7 @@
 		BF7E1A21228B7AC700F40708 /* Deviget */ = {
 			isa = PBXGroup;
 			children = (
+				BF7E1A66228CFE2F00F40708 /* Utils */,
 				BF7E1A62228CF35900F40708 /* Storyboards */,
 				BF7E1A61228CF33200F40708 /* ViewControllers */,
 				BF7E1A5E228CE97800F40708 /* Repositories */,
@@ -188,6 +193,15 @@
 				BF7E1A64228CF38D00F40708 /* EntryCell.swift */,
 			);
 			path = CustomCell;
+			sourceTree = "<group>";
+		};
+		BF7E1A66228CFE2F00F40708 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BF7E1A67228CFE4E00F40708 /* Date+Extension.swift */,
+				BF7E1A69228CFED900F40708 /* UIImageView+Extension.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -293,6 +307,8 @@
 			files = (
 				BF7E1A4D228B7E3100F40708 /* Entry.swift in Sources */,
 				BF7E1A46228B7D7700F40708 /* HttpMethod.swift in Sources */,
+				BF7E1A6A228CFED900F40708 /* UIImageView+Extension.swift in Sources */,
+				BF7E1A68228CFE4E00F40708 /* Date+Extension.swift in Sources */,
 				BF7E1A60228CE98F00F40708 /* EntryRepository.swift in Sources */,
 				BF7E1A52228B7E8C00F40708 /* EntryService.swift in Sources */,
 				BF7E1A65228CF38D00F40708 /* EntryCell.swift in Sources */,

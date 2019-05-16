@@ -29,7 +29,7 @@ class EntryDataRepository : EntryRepository{
     
     let entryService: EntryService
     
-    let pageSize : Int = 50
+    let pageSize : Int = 10
     
     public init(entryService: EntryService) {
         self.entryService = entryService
