@@ -14,6 +14,7 @@ protocol EntryRepository {
     func load(completion : @escaping CompletionHandler)
     func loadMore(completion : @escaping CompletionHandler)
     func dismiss(entry : Entry)
+    func dismissAllEntries()
     func markAsSeen(entry : Entry)
     
     var entriesCount : Int { get }
@@ -75,6 +76,12 @@ class EntryDataRepository : EntryRepository{
     
     func dismiss(entry: Entry) {
         entry.dismiss = true
+    }
+    
+    func dismissAllEntries(){
+        data?.forEach {
+            $0.dismiss = true
+        }
     }
     
     func markAsSeen(entry: Entry) {

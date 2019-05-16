@@ -99,6 +99,11 @@ class MasterViewController: UITableViewController {
             }
         }
     }
+    
+    @IBAction func dismissAll(){
+        entriesPresenter.dismissAllEntries()
+        tableView.reloadData()
+    }
 }
 
 extension MasterViewController {

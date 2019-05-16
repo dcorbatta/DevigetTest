@@ -51,6 +51,10 @@ class EntriesPresenter {
         }
     }
     
+    func dismissAllEntries(){
+        entryRepository.dismissAllEntries()
+    }
+    
     func dismissEntry(entry: Entry) {
         entryRepository.dismiss(entry: entry)
     }
