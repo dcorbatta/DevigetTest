@@ -22,6 +22,7 @@
 		BF7E1A52228B7E8C00F40708 /* EntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A51228B7E8C00F40708 /* EntryService.swift */; };
 		BF7E1A55228B85DB00F40708 /* EntriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A54228B85DA00F40708 /* EntriesPresenter.swift */; };
 		BF7E1A60228CE98F00F40708 /* EntryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A5F228CE98F00F40708 /* EntryRepository.swift */; };
+		BF7E1A65228CF38D00F40708 /* EntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A64228CF38D00F40708 /* EntryCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		BF7E1A51228B7E8C00F40708 /* EntryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryService.swift; sourceTree = "<group>"; };
 		BF7E1A54228B85DA00F40708 /* EntriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesPresenter.swift; sourceTree = "<group>"; };
 		BF7E1A5F228CE98F00F40708 /* EntryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryRepository.swift; sourceTree = "<group>"; };
+		BF7E1A64228CF38D00F40708 /* EntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,15 +97,14 @@
 		BF7E1A21228B7AC700F40708 /* Deviget */ = {
 			isa = PBXGroup;
 			children = (
+				BF7E1A62228CF35900F40708 /* Storyboards */,
+				BF7E1A61228CF33200F40708 /* ViewControllers */,
 				BF7E1A5E228CE97800F40708 /* Repositories */,
 				BF7E1A53228B85B900F40708 /* Presenters */,
 				BF7E1A4E228B7E5F00F40708 /* Services */,
 				BF7E1A4B228B7E2300F40708 /* Models */,
 				BF7E1A44228B7D4C00F40708 /* Networking */,
 				BF7E1A22228B7AC700F40708 /* AppDelegate.swift */,
-				BF7E1A24228B7AC700F40708 /* MasterViewController.swift */,
-				BF7E1A26228B7AC700F40708 /* DetailViewController.swift */,
-				BF7E1A28228B7AC700F40708 /* Main.storyboard */,
 				BF7E1A2B228B7AD400F40708 /* Assets.xcassets */,
 				BF7E1A2D228B7AD400F40708 /* LaunchScreen.storyboard */,
 				BF7E1A30228B7AD400F40708 /* Info.plist */,
@@ -161,6 +162,32 @@
 				BF7E1A5F228CE98F00F40708 /* EntryRepository.swift */,
 			);
 			path = Repositories;
+			sourceTree = "<group>";
+		};
+		BF7E1A61228CF33200F40708 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BF7E1A63228CF37D00F40708 /* CustomCell */,
+				BF7E1A24228B7AC700F40708 /* MasterViewController.swift */,
+				BF7E1A26228B7AC700F40708 /* DetailViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		BF7E1A62228CF35900F40708 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				BF7E1A28228B7AC700F40708 /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		BF7E1A63228CF37D00F40708 /* CustomCell */ = {
+			isa = PBXGroup;
+			children = (
+				BF7E1A64228CF38D00F40708 /* EntryCell.swift */,
+			);
+			path = CustomCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,6 +295,7 @@
 				BF7E1A46228B7D7700F40708 /* HttpMethod.swift in Sources */,
 				BF7E1A60228CE98F00F40708 /* EntryRepository.swift in Sources */,
 				BF7E1A52228B7E8C00F40708 /* EntryService.swift in Sources */,
+				BF7E1A65228CF38D00F40708 /* EntryCell.swift in Sources */,
 				BF7E1A27228B7AC700F40708 /* DetailViewController.swift in Sources */,
 				BF7E1A4A228B7E0A00F40708 /* URLSession+Resource.swift in Sources */,
 				BF7E1A25228B7AC700F40708 /* MasterViewController.swift in Sources */,

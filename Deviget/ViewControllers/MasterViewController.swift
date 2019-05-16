@@ -8,6 +8,10 @@
 
 import UIKit
 
+private enum CellsIdentifiers : String {
+    case entryCell = "entryCell"
+    case loadingCell = "loadingCell"
+}
 class MasterViewController: UITableViewController {
 
     private var entriesPresenter : EntriesPresenter!
@@ -22,9 +26,7 @@ class MasterViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.leftBarButtonItem = editButtonItem
-        
+        title = "Reddit Posts"
         tableView.prefetchDataSource = self
         
         if let split = splitViewController {
@@ -47,11 +49,11 @@ class MasterViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-            if let indexPath = tableView.indexPathForSelectedRow {
-                let object = entriesPresenter.getVisibleEntry(atIndex:indexPath.row)  as! Entry
+            if let indexPath = tableView.indexPathForSelectedRow,
+                let entry = entriesPresenter.getVisibleEntry(atIndex:indexPath.row){
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object.title
-                entriesPresenter.markEntryAsSeen(entry: object)
+                controller.detailItem = entry.title
+                entriesPresenter.markEntryAsSeen(entry: entry)
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -70,35 +72,33 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
         
         if isLoadingCell(for: indexPath) {
-            cell.textLabel!.text = "Loading"
-        }else if let object = entriesPresenter.getVisibleEntry(atIndex:indexPath.row) {
-            cell.textLabel!.text = object.title
-            cell.contentView.backgroundColor = object.read ?? false ? .blue : .white
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellsIdentifiers.loadingCell.rawValue, for: indexPath)
+            return cell
+        }else {
+            let object = entriesPresenter.getVisibleEntry(atIndex:indexPath.row) 
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellsIdentifiers.entryCell.rawValue, for: indexPath) as! EntryCell
+            cell.entry = object
+            cell.delegate = self
+            return cell
         }
-        
-        return cell
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if let entry = entriesPresenter.getVisibleEntry(atIndex:  indexPath.row) {
                 entriesPresenter.dismissEntry(entry: entry)
-                tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.deleteRows(at: [indexPath], with: .left)
             }
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
-
-
 }
 
 extension MasterViewController {
@@ -110,6 +110,15 @@ extension MasterViewController {
         
     }
     
+}
+
+extension MasterViewController : EntryCellDelegate {
+    func dismiss(_ cell: EntryCell, withEntry entry : Entry) {
+        if let indexPath = tableView.indexPath(for: cell){
+            entriesPresenter.dismissEntry(entry: entry)
+            tableView.deleteRows(at: [indexPath], with: .left)
+        }
+    }
 }
 
 extension MasterViewController : EntriesPresenterDelegate {
