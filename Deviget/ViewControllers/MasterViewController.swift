@@ -52,7 +52,7 @@ class MasterViewController: UITableViewController {
             if let indexPath = tableView.indexPathForSelectedRow,
                 let entry = entriesPresenter.getVisibleEntry(atIndex:indexPath.row){
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = entry.title
+                controller.detailEntry = entry
                 entriesPresenter.markEntryAsSeen(entry: entry)
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
