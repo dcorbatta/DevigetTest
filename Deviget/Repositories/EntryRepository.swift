@@ -28,19 +28,29 @@ class EntryDataRepository : EntryRepository{
     private var data: [Entry]?
     private var nextPageId : String?
     
+    private var localEntryStates : [String:LocalEntryState]
+    
     let entryService: EntryService
     
     let pageSize : Int = 10
     
+    let localEntryStatesFileName = "localEntryStates.data"
+    
     public init(entryService: EntryService) {
         self.entryService = entryService
+        
+        if Storage.fileExists(localEntryStatesFileName, in: .documents) {
+            self.localEntryStates = Storage.retrieve(localEntryStatesFileName, from: .documents, as: [String:LocalEntryState].self)
+        }else{
+            self.localEntryStates = [:]
+        }
     }
     
     func load(completion : @escaping CompletionHandler) {
         data?.removeAll()
         
         entryService.getTopEntries(limit:pageSize) {[weak self] (entries,nextpage, errorMsg) in
-            self?.data = entries
+            self?.data = self?.mixRemoteEntryWithLocalState(entries: entries ?? [])
             self?.nextPageId = nextpage
             let addedEntries = Array(0..<(entries?.count ?? 0))
             completion(addedEntries,errorMsg)
@@ -60,8 +70,9 @@ class EntryDataRepository : EntryRepository{
             self?.isLoadingMore = false
             
             //Add new data
-            if let entries = entries {
-                self?.data?.append(contentsOf:entries)
+            if let entries = entries,
+                let mixedEntries = self?.mixRemoteEntryWithLocalState(entries: entries){
+                self?.data?.append(contentsOf:mixedEntries)
             }
             
             //Update next page id
@@ -78,16 +89,19 @@ class EntryDataRepository : EntryRepository{
     
     func dismiss(entry: Entry) {
         entry.dismiss = true
+        markAsDismissInLocalStorage(entry)
     }
     
     func dismissAllEntries(){
         data?.forEach {
             $0.dismiss = true
+            markAsDismissInLocalStorage($0)
         }
     }
     
     func markAsSeen(entry: Entry) {
         entry.read = true
+        markAsReadInLocalStorage(entry)
     }
     
     var entriesCount : Int {
@@ -114,5 +128,41 @@ class EntryDataRepository : EntryRepository{
     
     func getEntry(atIndex index : Int) -> Entry?{
         return data?[index]
+    }
+}
+
+extension EntryDataRepository {
+    func markAsDismissInLocalStorage(_ entry : Entry ){
+        if let id = entry.id {
+            localEntryStates[id]?.dismiss = true
+            Storage.store(localEntryStates, to: .documents, as: localEntryStatesFileName)
+        }
+    }
+    
+    func markAsReadInLocalStorage(_ entry : Entry ){
+        if let id = entry.id {
+            localEntryStates[id]?.read = true
+            Storage.store(localEntryStates, to: .documents, as: localEntryStatesFileName)
+        }
+    }
+    
+    private func mixRemoteEntryWithLocalState(entries : [Entry]) -> [Entry]{
+        let entries : [Entry] = entries.compactMap({
+            if let id = $0.id {
+                guard let entryState = self.localEntryStates[id] else {
+                    self.localEntryStates[id] = LocalEntryState(entry: $0)
+                    return $0
+                }
+                $0.dismiss = entryState.dismiss ?? false
+                $0.read = entryState.read ?? false
+                return $0
+            }else{
+                return nil
+            }
+        })
+        
+        Storage.store(localEntryStates, to: .documents, as: localEntryStatesFileName)
+        
+        return entries
     }
 }

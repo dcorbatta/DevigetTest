@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF312643228D0C8D0021117B /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF312642228D0C8D0021117B /* Storage.swift */; };
+		BF312645228D0CBD0021117B /* LocalEntryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF312644228D0CBD0021117B /* LocalEntryState.swift */; };
 		BF7E1A23228B7AC700F40708 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A22228B7AC700F40708 /* AppDelegate.swift */; };
 		BF7E1A25228B7AC700F40708 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A24228B7AC700F40708 /* MasterViewController.swift */; };
 		BF7E1A27228B7AC700F40708 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E1A26228B7AC700F40708 /* DetailViewController.swift */; };
@@ -38,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BF312642228D0C8D0021117B /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		BF312644228D0CBD0021117B /* LocalEntryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalEntryState.swift; sourceTree = "<group>"; };
 		BF7E1A1F228B7AC700F40708 /* Deviget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Deviget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF7E1A22228B7AC700F40708 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF7E1A24228B7AC700F40708 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -140,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				BF7E1A4C228B7E3100F40708 /* Entry.swift */,
+				BF312644228D0CBD0021117B /* LocalEntryState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -200,6 +205,7 @@
 			children = (
 				BF7E1A67228CFE4E00F40708 /* Date+Extension.swift */,
 				BF7E1A69228CFED900F40708 /* UIImageView+Extension.swift */,
+				BF312642228D0C8D0021117B /* Storage.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -319,6 +325,8 @@
 				BF7E1A23228B7AC700F40708 /* AppDelegate.swift in Sources */,
 				BF7E1A50228B7E7500F40708 /* TopEntriesResponse.swift in Sources */,
 				BF7E1A55228B85DB00F40708 /* EntriesPresenter.swift in Sources */,
+				BF312645228D0CBD0021117B /* LocalEntryState.swift in Sources */,
+				BF312643228D0C8D0021117B /* Storage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
