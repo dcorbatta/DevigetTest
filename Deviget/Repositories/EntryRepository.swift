@@ -37,6 +37,8 @@ class EntryDataRepository : EntryRepository{
     }
     
     func load(completion : @escaping CompletionHandler) {
+        data?.removeAll()
+        
         entryService.getTopEntries(limit:pageSize) {[weak self] (entries,nextpage, errorMsg) in
             self?.data = entries
             self?.nextPageId = nextpage

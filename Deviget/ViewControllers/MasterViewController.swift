@@ -27,7 +27,8 @@ class MasterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Reddit Posts"
-        tableView.prefetchDataSource = self
+        
+        configureTableView()
         
         if let split = splitViewController {
             let controllers = split.viewControllers
@@ -44,7 +45,18 @@ class MasterViewController: UITableViewController {
         tableView.reloadData()
     }
 
-
+    func configureTableView(){
+        tableView.prefetchDataSource = self
+        refreshControl = UIRefreshControl()
+        tableView.refreshControl = refreshControl
+        refreshControl?.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+    }
+    
+    @objc private func refreshData(_ sender: Any) {
+        entriesPresenter.getAll()
+        tableView.reloadData()
+    }
+    
     // MARK: - Segues
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -141,6 +153,7 @@ extension MasterViewController : EntriesPresenterDelegate {
     
     func updateUI() {
         hideLoading()
+        refreshControl?.endRefreshing()
         tableView.reloadData()
     }
     

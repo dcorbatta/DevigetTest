@@ -15,8 +15,6 @@ protocol EntriesPresenterDelegate : NSObjectProtocol{
 }
 
 class EntriesPresenter {
-    private var data: [Entry]?
-    private var nextPageId : String?
     
     weak var delegate : EntriesPresenterDelegate?
     
