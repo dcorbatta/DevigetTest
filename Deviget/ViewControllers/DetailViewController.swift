@@ -28,6 +28,11 @@ class DetailViewController: UIViewController {
 
     var detailEntry: Entry! 
 
+    @IBAction func imageTapped(_ sender: Any) {
+        if let fullImage = detailEntry.fullImage, let imageURL = URL(string : fullImage) {
+            UIApplication.shared.open(imageURL, options: [:], completionHandler: { (status) in })
+        }
+    }
 
 }
 
