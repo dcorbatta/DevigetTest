@@ -10,6 +10,7 @@ import Foundation
 
 protocol EntriesPresenterDelegate : NSObjectProtocol{
     func updateUI()
+    func reload(atIndexPath indexPaths: [IndexPath])
     func showError(_ errorMsg : String)
 }
 
@@ -27,7 +28,7 @@ class EntriesPresenter {
     }
     
     func getAll() {
-        entryRepository.load(){ [weak self](errorMsg) in
+        entryRepository.load(){ [weak self](_,errorMsg) in
             
             DispatchQueue.main.async {
                 self?.delegate?.updateUI()
@@ -37,8 +38,25 @@ class EntriesPresenter {
         }
     }
     
+    func loadMore(){
+        entryRepository.loadMore { [weak self](indexesAdded,errorMsg) in
+            
+            let indexPaths = indexesAdded?.compactMap { IndexPath(row: $0, section: 0) } ?? []
+            
+            DispatchQueue.main.async {
+                self?.delegate?.reload(atIndexPath: indexPaths)
+                guard let errorMsg = errorMsg else { return }
+                self?.delegate?.showError(errorMsg)
+            }
+        }
+    }
+    
     func dismissEntry(entry: Entry) {
         entryRepository.dismiss(entry: entry)
+    }
+    
+    func markEntryAsSeen(entry : Entry) {
+        entryRepository.markAsSeen(entry: entry)
     }
 }
 

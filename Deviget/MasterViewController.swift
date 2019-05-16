@@ -25,6 +25,8 @@ class MasterViewController: UITableViewController {
         
         navigationItem.leftBarButtonItem = editButtonItem
         
+        tableView.prefetchDataSource = self
+        
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
@@ -37,6 +39,7 @@ class MasterViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
 
@@ -44,13 +47,14 @@ class MasterViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-            /*if let indexPath = tableView.indexPathForSelectedRow {
-                let object = objects[indexPath.row] as! NSDate
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let object = entriesPresenter.getVisibleEntry(atIndex:indexPath.row)  as! Entry
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
+                controller.detailItem = object.title
+                entriesPresenter.markEntryAsSeen(entry: object)
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
-            }*/
+            }
         }
     }
 
@@ -61,15 +65,20 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return entriesPresenter.visibleEntriesCount
+        //Visibles Entries + Load More Cell
+        return entriesPresenter.visibleEntriesCount + 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-
-        if let object = entriesPresenter.getVisibleEntry(atIndex:indexPath.row) {
+        
+        if isLoadingCell(for: indexPath) {
+            cell.textLabel!.text = "Loading"
+        }else if let object = entriesPresenter.getVisibleEntry(atIndex:indexPath.row) {
             cell.textLabel!.text = object.title
+            cell.contentView.backgroundColor = object.read ?? false ? .blue : .white
         }
+        
         return cell
     }
 
@@ -104,6 +113,19 @@ extension MasterViewController {
 }
 
 extension MasterViewController : EntriesPresenterDelegate {
+    
+    func reload(atIndexPath indexPaths: [IndexPath]){
+        let indexPathsToReload = visibleIndexPathsToReload(intersecting: indexPaths)
+        
+        if indexPathsToReload.count > 0 {
+            //Insert the new rows
+            tableView.insertRows(at: indexPaths, with: .automatic)
+        }
+        
+        //Reload visible rows
+        tableView.reloadRows(at: indexPathsToReload, with: .automatic)
+    }
+    
     func updateUI() {
         hideLoading()
         tableView.reloadData()
@@ -114,4 +136,24 @@ extension MasterViewController : EntriesPresenterDelegate {
     }
     
     
+}
+
+extension MasterViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        if indexPaths.contains(where: isLoadingCell) {
+            entriesPresenter.loadMore()
+        }
+    }
+}
+
+private extension MasterViewController {
+    func isLoadingCell(for indexPath: IndexPath) -> Bool {
+        return indexPath.row >= entriesPresenter.visibleEntriesCount
+    }
+    
+    func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
+        let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows ?? []
+        let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
+        return Array(indexPathsIntersection)
+    }
 }

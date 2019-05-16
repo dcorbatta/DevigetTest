@@ -9,7 +9,7 @@
 import Foundation
 
 protocol EntryRepository {
-    typealias CompletionHandler = (String?) -> ()
+    typealias CompletionHandler = ([Int]?,String?) -> ()
     
     func load(completion : @escaping CompletionHandler)
     func loadMore(completion : @escaping CompletionHandler)
@@ -39,12 +39,38 @@ class EntryDataRepository : EntryRepository{
         entryService.getTopEntries(limit:pageSize) {[weak self] (entries,nextpage, errorMsg) in
             self?.data = entries
             self?.nextPageId = nextpage
-            completion(errorMsg)
+            let addedEntries = Array(0..<(entries?.count ?? 0))
+            completion(addedEntries,errorMsg)
         }
     }
     
-    func loadMore(completion : @escaping CompletionHandler){
+    var isLoadingMore = false
+    func loadMore(completion : @escaping CompletionHandler) {
+       
+        if isLoadingMore {
+            return
+        }
+        isLoadingMore = true
         
+        entryService.getTopEntries(after: nextPageId,limit:pageSize) { [weak self](entries,nextpage, errorMsg) in
+
+            self?.isLoadingMore = false
+            
+            //Add new data
+            if let entries = entries {
+                self?.data?.append(contentsOf:entries)
+            }
+            
+            //Update next page id
+            self?.nextPageId = nextpage
+            
+            //Calculate added indexes.
+            let startIndex = (self?.data?.count ?? 0) - (entries?.count ?? 0)
+            let endIndex = startIndex + (entries?.count ?? 0)
+            let addedEntries = Array(startIndex..<endIndex)
+            
+            completion(addedEntries,errorMsg)
+        }
     }
     
     func dismiss(entry: Entry) {
@@ -52,7 +78,7 @@ class EntryDataRepository : EntryRepository{
     }
     
     func markAsSeen(entry: Entry) {
-        entry.dismiss = true
+        entry.read = true
     }
     
     var entriesCount : Int {
